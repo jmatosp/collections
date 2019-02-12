@@ -24,25 +24,25 @@ func main() {
 
 	for _, slice := range slices {
 		generateCollections(slice)
-		fmt.Printf("Generated for type %s\n", slice.sliceName)
+		fmt.Printf("Generated for type %s\n", slice.Name)
 	}
 }
 
-type sliceInfo struct {
-	filename      string
-	packageName   string
-	sliceName     string
-	sliceItemName string
+type sliceType struct {
+	filename    string
+	packageName string
+	Name        string
+	itemName    string
 }
 
-func parseFile(filename string) ([]sliceInfo, error) {
+func parseFile(filename string) ([]sliceType, error) {
 	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, filename, nil, 0)
 	if err != nil {
 		return nil, err
 	}
 
-	var result []sliceInfo
+	var result []sliceType
 	var packageName string
 
 	ast.Inspect(f, func(n ast.Node) bool {
@@ -60,11 +60,11 @@ func parseFile(filename string) ([]sliceInfo, error) {
 			if !ok {
 				return true
 			}
-			result = append(result, sliceInfo{
-				filename:      filename,
-				packageName:   packageName,
-				sliceName:     sliceTypeName,
-				sliceItemName: elt.Name,
+			result = append(result, sliceType{
+				filename:    filename,
+				packageName: packageName,
+				Name:        sliceTypeName,
+				itemName:    elt.Name,
 			})
 		}
 		return true
@@ -79,14 +79,14 @@ type templateData struct {
 	ItemType    string
 }
 
-func generateCollections(info sliceInfo) {
+func generateCollections(info sliceType) {
 	templateData := templateData{
 		PackageName: info.packageName,
-		Type:        info.sliceName,
-		ItemType:    info.sliceItemName,
+		Type:        info.Name,
+		ItemType:    info.itemName,
 	}
 
-	filename := strings.ToLower(info.sliceName) + "_collection.go"
+	filename := strings.ToLower(info.Name) + "_collection.go"
 	f, err := os.Create(filename)
 	if err != nil {
 		fmt.Printf("error creating output file %s, %s", filename, err.Error())

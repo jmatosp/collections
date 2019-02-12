@@ -45,7 +45,7 @@ func main() {
 ## Install
 
 ```
-go get -u github.com/jmatos/collections
+go get -u github.com/jmatosp/collections
 ``` 
 
 ## Usage
