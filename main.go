@@ -165,9 +165,7 @@ func (collection {{.Type}}) Apply(applyFunc {{.ItemType}}ApplyFunc) {
 }
 
 func (collection {{.Type}}) Println() {
-	collection.Apply(func(item {{.ItemType}}) {
-		fmt.Println(item)
-	})
+	fmt.Println(collection)
 }
 
 func (collection {{.Type}}) Print() {
@@ -178,7 +176,6 @@ func (collection {{.Type}}) Print() {
 
 func (collection {{.Type}}) String() string {
 	var result string
-	for _, item := range collection {
 		result = result + fmt.Sprintln(item)
 	}
 	return result

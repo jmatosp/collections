@@ -71,9 +71,9 @@ collections -name=mytype.go
 
 ## API
 
-###  collection._Filter()_
+### collection._Filter( func(item {Type}) bool )_
 
-Filters out elements from a collection, returns a new collection
+Filters out elements using a function on each element, returns a new collection
 
 ```go
 package main
@@ -111,3 +111,68 @@ func main() {
 ```
 
 More examples in `example/` subfolder
+
+###  collection._All( func(item {type}) bool )_
+
+Similar to [Filter]() but element that pass the functions are returned in the new collection
+
+```go
+filtered := persons.Filter(func(item Person) { return item.Age >= 18 } )
+```
+
+###  collection._First() {type}_
+
+Returns the first item in the collection
+
+```go
+oldestPerson := persons.
+	Sort(func(item, other Person) { return item.Age > other.Age } ).
+	First()
+fmt.Println(oldestPerson)
+// Output:
+// {"Hannibal", 57},
+```
+
+###  collection._Sort(func(item, other {type}) bool)_
+
+Sorts a collection by a provided function, returns a new collection
+
+```go
+persons.
+	Sort(func(item, other Person) { return strings.Compare(item.Name, other.Name) } ).
+	Println()
+// Output:
+// {"Hannah", 17},
+// {"Hannibal", 57},
+// {"Joana", 20},
+// {"John", 21},
+// {"Jose", 40},
+```
+
+###  collection._Apply(func(item {type}))_
+
+Runs a function on every element of the collection.
+
+Example sending email to every person:
+```go
+sendEmail := func(person Person) { service.SendWelcome(person) }
+persons.Apply(sendEmail)
+```
+
+Example mapping between object types:
+```go
+var ages []int
+persons.Apply(func(person Person) { ages = append(ages, person.Age) } )
+fmt.Println(ages)
+// Output:
+// {21 17 57 40 20}
+```
+
+###  collection._Println()_
+
+Prints all elements of collection one by line
+
+###  collection._String()_
+
+Returns a collection list representation
+
