@@ -33,4 +33,8 @@ func TestNames_Filter(t *testing.T) {
 	if len(underAge) != 1 {
 		t.Fail()
 	}
+
+	if underAge[0].Name != "Hannah" {
+		t.Fail()
+	}
 }

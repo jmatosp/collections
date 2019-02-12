@@ -73,4 +73,3 @@ func (collection Persons) String() string {
 	}
 	return result
 }
-

@@ -6,7 +6,41 @@ Dynamically generate custom type slice handling
 
 Generics look a like
 
-Library done without any external libraries, only go standard library 
+## Quick example
+
+```go
+package main
+
+//go:generate collections -name=orders.go
+
+type Order struct {
+    Shipped  bool
+    Customer string
+}
+
+type Orders []Order 
+
+var orders = Orders{
+	{true, "Phantom Softwares"},
+	{true, "Ieworks"},
+	{false, "Seawares"},
+	{true, "Pixystems"},
+}
+
+func main() {
+	// print all shipped orders sorted by customer name
+	orders.
+		All(func (item Order) { return order.Shipped } ).
+		Sort(func(item, other Order) { return strings.Compare(item.Customer, other.Customer) } ). 
+		Println()
+
+    // Output:
+    // {true Ieworks} 
+    // {true Phantom Softwares} 
+    // {true Pixystems} 
+}
+
+``` 
 
 ## Install
 
@@ -32,14 +66,14 @@ type Persons []Person
 Or by command line
 
 ```
-collection
+collections -name=mytype.go
 ```
 
 ## API
 
 ###  collection._Filter()_
 
-Filters out elements from a collection
+Filters out elements from a collection, returns a new collection
 
 ```go
 package main
