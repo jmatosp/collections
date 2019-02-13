@@ -1,17 +1,17 @@
-# Collection
+# Collections
 
 *** Experimental - first prototype ***
 
 Dynamically generate custom type slice handling
 
-Generics look a like
+Generics look a like go Go
 
 ## Quick example
 
 ```go
 package main
 
-//go:generate collections -name=orders.go
+//go:generate collections -file $GOFILE
 
 type Order struct {
     Shipped  bool
@@ -55,7 +55,7 @@ Add to you go source file the `go:generate`
 ```go
 package main 
 
-//go:generate collections -name=person.go
+//go:generate collections -file $GOFILE
 
 type Person struct {}
 
@@ -66,7 +66,7 @@ type Persons []Person
 Or by command line
 
 ```
-collections -name=mytype.go
+collections  -file source.go
 ```
 
 ## API
@@ -80,7 +80,7 @@ package main
 
 import "strings"
 
-//go:generate collections -name=filename.go
+//go:generate collections -file $GOFILE
 
 type Person struct {
 	Name string

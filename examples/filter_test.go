@@ -6,15 +6,15 @@ import (
 	"testing"
 )
 
-var persons = Persons{
-	{"John", 21},
-	{"Hannah", 17},
-	{"Hannibal", 57},
-	{"Jose", 40},
-	{"Joana", 20},
-}
-
 func ExampleAges_Filter() {
+	var persons = Persons{
+		{"John", 21},
+		{"Hannah", 17},
+		{"Hannibal", 57},
+		{"Jose", 40},
+		{"Joana", 20},
+	}
+
 	filtered := persons.Filter(func(item Person) bool {
 		return strings.HasPrefix(item.Name, "J")
 	})
@@ -26,6 +26,14 @@ func ExampleAges_Filter() {
 }
 
 func TestNames_Filter(t *testing.T) {
+	var persons = Persons{
+		{"John", 21},
+		{"Hannah", 17},
+		{"Hannibal", 57},
+		{"Jose", 40},
+		{"Joana", 20},
+	}
+
 	adultsFunc := func(item Person) bool { return item.Age >= 18 }
 
 	underAge := persons.Filter(adultsFunc)
