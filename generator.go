@@ -161,5 +161,4 @@ func (_c {{.Type}}) String() string {
 	return result
 }
 {{ end }}
-
 `

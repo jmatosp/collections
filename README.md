@@ -42,6 +42,8 @@ func main() {
 
 ``` 
 
+More example in `examples/` folder.
+
 ## Install
 
 ```
