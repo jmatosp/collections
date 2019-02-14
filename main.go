@@ -6,8 +6,6 @@ import (
 	"os"
 )
 
-// @todo write docs & examples
-// @todo write more tests
 // @todo add mapping to custom types
 // @todo discover receiver name if set has any method implemented
 // @todo if two sets share the same item type a collision of names happens

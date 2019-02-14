@@ -2,11 +2,15 @@
 
 *** Experimental - first prototype ***
 
-Dynamically generate custom type slice handling
+Dynamically generate custom type slice handling.
 
-Generics look a like go Go
+This tool will generate methods to manipulate your slices in an functional sort of way.
+
+The API includes: `All`, `Filter`, `Apply`, `Map`, `MapToInts`, `MapToStrings`, `Println`, `Print`, `String`
 
 ## Quick example
+
+Example how to manipulate one of you custome slice type:
 
 ```go
 package main
@@ -39,10 +43,9 @@ func main() {
     // {true Phantom Softwares} 
     // {true Pixystems} 
 }
-
 ``` 
 
-More example in `examples/` folder.
+More examples in `examples/` folder.
 
 ## Install
 
@@ -52,7 +55,7 @@ go get -u github.com/jmatosp/collections
 
 ## Usage
 
-Add to you go source file the `go:generate`
+Add to you go source file the `go:generate`:
 
 ```go
 package main 
@@ -65,7 +68,7 @@ type Persons []Person
 
 ```
 
-Or by command line
+Or by command line:
 
 ```
 collections  -file source.go

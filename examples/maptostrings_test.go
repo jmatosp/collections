@@ -1,16 +1,11 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
-func ExamplePerson_Strings() {
+func ExamplePersons_MapToStrings() {
 	var persons = Persons{
 		{"John", 21},
 		{"Hannah", 17},
-		{"Hannibal", 57},
-		{"Jose", 40},
-		{"Joana", 20},
 	}
 
 	names := persons.MapToStrings(func(item Person) string {
@@ -19,5 +14,5 @@ func ExamplePerson_Strings() {
 
 	fmt.Println(names)
 	// Output:
-	// [John Hannah Hannibal Jose Joana]
+	// [John Hannah]
 }
