@@ -198,4 +198,3 @@ func (_c Orders) String() string {
 	return result
 }
 
-

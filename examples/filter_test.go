@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func ExampleAges_Filter() {
+func ExamplePersons_Filter() {
 	var persons = Persons{
 		{"John", 21},
 		{"Hannah", 17},

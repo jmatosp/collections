@@ -1,7 +1,5 @@
 # Collections
 
-*** Experimental - first prototype ***
-
 Dynamically generate custom type slice handling.
 
 This tool will generate methods to manipulate your slices in an functional sort of way.
@@ -10,19 +8,21 @@ The API includes: `All`, `Filter`, `Apply`, `Map`, `MapToInts`, `MapToStrings`, 
 
 ## Quick example
 
-Example how to manipulate one of you custome slice type:
+Example how to manipulate one of your custom slice type: 
 
 ```go
 package main
 
+import "strings"
+
 //go:generate collections -file $GOFILE
 
 type Order struct {
-    Shipped  bool
-    Customer string
+	Shipped  bool
+	Customer string
 }
 
-type Orders []Order 
+type Orders []Order
 
 var orders = Orders{
 	{true, "Phantom Softwares"},
@@ -34,18 +34,18 @@ var orders = Orders{
 func main() {
 	// print all shipped orders sorted by customer name
 	orders.
-		All(func (item Order) { return order.Shipped } ).
-		Sort(func(item, other Order) { return strings.Compare(item.Customer, other.Customer) } ). 
+		All(func(item Order) bool { return item.Shipped }).
+		Sort(func(item, other Order) bool { return strings.Compare(item.Customer, other.Customer) < 0 }).
 		Println()
 
-    // Output:
-    // {true Ieworks} 
-    // {true Phantom Softwares} 
-    // {true Pixystems} 
+	// Output:
+	// {true Ieworks}
+	// {true Phantom Softwares}
+	// {true Pixystems}
 }
 ``` 
 
-More examples in `examples/` folder.
+More examples in [examples](examples) folder.
 
 ## Install
 
@@ -71,113 +71,65 @@ type Persons []Person
 Or by command line:
 
 ```
-collections  -file source.go
+collections -file source.go
 ```
 
 ## API
 
 ### collection._Filter( func(item {Type}) bool )_
 
-Filters out elements using a function on each element, returns a new collection
+Filters out elements using a function on each element, returns a new collection.
 
-```go
-package main
-
-import "strings"
-
-//go:generate collections -file $GOFILE
-
-type Person struct {
-	Name string
-	Age  int
-}
-
-type Persons []Person
-
-var persons = Persons{
-	{"John", 21},
-	{"Hannah", 17},
-	{"Hannibal", 57},
-	{"Jose", 40},
-	{"Joana", 20},
-}
-
-func main() {
-	nameStartsWithJ := func(item Person) bool { return strings.HasPrefix(item.Name, "J") }
-	
-	filtered := persons.Filter(nameStartsWithJ)
-
-	fmt.Println(filtered)
-	// Output:
-	// {Hannah 17}
-	// {Hannibal 57}
-}
-
-```
-
-More examples in `example/` subfolder
+[Example](examples/filter_test.go)
 
 ###  collection._All( func(item {type}) bool )_
 
-Similar to [Filter]() but element that pass the functions are returned in the new collection
+Similar to Filter but element that pass the functions are returned in the new collection.
 
-```go
-filtered := persons.Filter(func(item Person) { return item.Age >= 18 } )
-```
+[Example](examples/all_test.go)
+
+###  collection._Map() []{type}_
+
+Maps the slice to a new collection of same type, doesnt mutate original slice.
+
+[Example](examples/map_test.go)
+
+###  collection._MapToInts() []int_
+
+Maps the slice objects into a slice of ints.
+
+[Example](examples/maptoints_test.go)
+
+###  collection._MapToString() []string_
+
+Maps the slice objects into a slice of strings.
+
+[Example](examples/maptoints_test.go)
 
 ###  collection._First() {type}_
 
 Returns the first item in the collection
 
-```go
-oldestPerson := persons.
-	Sort(func(item, other Person) { return item.Age > other.Age } ).
-	First()
-fmt.Println(oldestPerson)
-// Output:
-// {"Hannibal", 57},
-```
+[Example](examples/filter_test.go)
 
 ###  collection._Sort(func(item, other {type}) bool)_
 
-Sorts a collection by a provided function, returns a new collection
+Sorts a collection by a provided function, returns a new collection.
 
-```go
-persons.
-	Sort(func(item, other Person) { return strings.Compare(item.Name, other.Name) } ).
-	Println()
-// Output:
-// {"Hannah", 17},
-// {"Hannibal", 57},
-// {"Joana", 20},
-// {"John", 21},
-// {"Jose", 40},
-```
+[Example](examples/sort_test.go)
 
 ###  collection._Apply(func(item {type}))_
 
 Runs a function on every element of the collection.
 
-Example sending email to every person:
-```go
-sendEmail := func(person Person) { service.SendWelcome(person) }
-persons.Apply(sendEmail)
-```
-
-Example mapping between object types:
-```go
-var ages []int
-persons.Apply(func(person Person) { ages = append(ages, person.Age) } )
-fmt.Println(ages)
-// Output:
-// {21 17 57 40 20}
-```
+[Example](examples/apply_test.go)
 
 ###  collection._Println()_
 
-Prints all elements of collection one by line
+Prints all elements of collection one by line.
 
 ###  collection._String()_
 
-Returns a collection list representation
+Returns a collection list representation.
 
+[Example](examples/string_test.go)
