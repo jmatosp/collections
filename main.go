@@ -6,9 +6,6 @@ import (
 	"os"
 )
 
-// @todo add mapping to custom types
-// @todo discover receiver name if set has any method implemented
-// @todo if two sets share the same item type a collision of names happens
 func main() {
 	var filename string
 	flag.StringVar(&filename, "file", "", "Name of the file to search for slice types")

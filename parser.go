@@ -4,6 +4,8 @@ import (
 	"go/ast"
 	"go/parser"
 	"go/token"
+	"io"
+	"os"
 )
 
 type fileTypes struct {
@@ -16,11 +18,20 @@ type sliceType struct {
 	itemName string
 }
 
+func parseFile(filename string) (fileTypes, error) {
+	file, err := os.Open(filename)
+	if err != nil {
+		return fileTypes{}, nil
+	}
+
+	return parseGo(filename, file)
+}
+
 // parseFile parses a Go file and returns all found
 // slice types and their item type
-func parseFile(filename string) (fileTypes, error) {
+func parseGo(filename string, r io.Reader) (fileTypes, error) {
 	fset := token.NewFileSet()
-	f, err := parser.ParseFile(fset, filename, nil, 0)
+	f, err := parser.ParseFile(fset, filename, r, 0)
 	if err != nil {
 		return fileTypes{}, err
 	}
