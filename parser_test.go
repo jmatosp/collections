@@ -15,7 +15,7 @@ type MyTypeSlice []MyType
 	typesFound, err := parseGo("source.go", strings.NewReader(source))
 
 	if err != nil {
-		t.Fail()
+		t.Errorf("unexpected error %s", err.Error())
 	}
 
 	if len(typesFound.sliceTypes) != 1 {
@@ -51,7 +51,7 @@ type MyTypeSlice2 []MyType2
 	typesFound, err := parseGo("source.go", strings.NewReader(source))
 
 	if err != nil {
-		t.Fail()
+		t.Errorf("unexpected error %s", err.Error())
 	}
 
 	if len(typesFound.sliceTypes) != 2 {
@@ -72,5 +72,29 @@ type MyTypeSlice2 []MyType2
 
 	if typesFound.sliceTypes[1].itemName != "MyType2" {
 		t.Errorf("expecting slice item type name to be MyType2 but found %s", typesFound.sliceTypes[0].itemName)
+	}
+}
+
+func TestParseGo_NoTypesFound(t *testing.T) {
+	source := `package main`
+
+	typesFound, err := parseGo("source.go", strings.NewReader(source))
+
+	if err != nil {
+		t.Errorf("unexpected error %s", err.Error())
+	}
+
+	if len(typesFound.sliceTypes) != 0 {
+		t.Errorf("not expecting to find any types but found %d type(s)", len(typesFound.sliceTypes))
+	}
+}
+
+func TestParseGo_HandlesParsingError(t *testing.T) {
+	source := `invalid source code`
+
+	_, err := parseGo("source.go", strings.NewReader(source))
+
+	if err == nil {
+		t.Error("expecting an error got none")
 	}
 }

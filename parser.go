@@ -27,8 +27,8 @@ func parseFile(filename string) (fileTypes, error) {
 	return parseGo(filename, file)
 }
 
-// parseFile parses a Go file and returns all found
-// slice types and their item type
+// parseGo parses Go source and returns all found
+// slice types and their respective item type
 func parseGo(filename string, r io.Reader) (fileTypes, error) {
 	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, filename, r, 0)
@@ -44,6 +44,7 @@ func parseGo(filename string, r io.Reader) (fileTypes, error) {
 		case *ast.File:
 			packageName = x.Name.Name
 		case *ast.TypeSpec:
+			// we are only interested in ArrayTypes
 			arrayType, ok := x.Type.(*ast.ArrayType)
 			if !ok {
 				return true
