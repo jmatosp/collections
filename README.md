@@ -4,7 +4,7 @@ Dynamically generate custom type slice handling.
 
 This tool will generate methods to manipulate your slices in an functional sort of way.
 
-The API includes: `All`, `Filter`, `Apply`, `Map`, `MapToInts`, `MapToStrings`, `Println`, `Print`, `String`
+The API includes: `Filter`, `Apply`, `Map`, `MapToInts`, `MapToStrings`, `Println`, `Print`, `String`
 
 ## Quick example
 
@@ -34,7 +34,7 @@ var orders = Orders{
 func main() {
 	// print all shipped orders sorted by customer name
 	orders.
-		All(func(item Order) bool { return item.Shipped }).
+		Filter(func(item Order) bool { return item.Shipped }).
 		Sort(func(item, other Order) bool { return strings.Compare(item.Customer, other.Customer) < 0 }).
 		Println()
 
@@ -76,17 +76,11 @@ collections -file source.go
 
 ## API
 
-### collection._Filter( func(item {Type}) bool )_
+###  collection._Filter( func(item {type}) bool )_
 
-Filters out elements using a function on each element, returns a new collection.
+Elements for which the function returns true are returned in the new collection.
 
 [Example](examples/filter_test.go)
-
-###  collection._All( func(item {type}) bool )_
-
-Similar to Filter but element that pass the functions are returned in the new collection.
-
-[Example](examples/all_test.go)
 
 ###  collection._Map() []{type}_
 

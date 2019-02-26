@@ -2,11 +2,12 @@ package main
 
 import (
 	"bytes"
-	"github.com/pkg/errors"
 	"os"
 	"path/filepath"
 	"strings"
 	"text/template"
+
+	"github.com/pkg/errors"
 )
 
 type templateData struct {
@@ -88,16 +89,6 @@ import (
 type Eligible{{.ItemType}}FilterFunc func(item {{.ItemType}}) bool
 
 func (_c {{.Type}}) Filter(eligible Eligible{{.ItemType}}FilterFunc) {{.Type}} {
-	var result {{.Type}}
-	for _, item := range _c {
-		if !eligible(item) {
-			result = append(result, item)
-		}
-	}
-	return result
-}
-
-func (_c {{.Type}}) All(eligible Eligible{{.ItemType}}FilterFunc) {{.Type}} {
 	var result {{.Type}}
 	for _, item := range _c {
 		if eligible(item) {
