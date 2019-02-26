@@ -16,7 +16,7 @@ func ExamplePersons_Filter() {
 	}
 
 	filtered := persons.Filter(func(item Person) bool {
-		return strings.HasPrefix(item.Name, "J")
+		return !strings.HasPrefix(item.Name, "J")
 	})
 
 	fmt.Println(filtered)
@@ -39,11 +39,11 @@ func TestNames_Filter(t *testing.T) {
 
 	underAge := persons.Filter(adultsFunc)
 
-	if len(underAge) != 0 {
-		t.Fail()
+	if len(underAge) != 1 {
+		t.Errorf("expecting 1 person underage but got: %d", len(underAge))
 	}
 
-	if underAge[0].Name != "John" {
-		t.Fail()
+	if underAge[0].Name != "Hannah" {
+		t.Errorf("expecting Hannah person underage but got: %s", underAge[0].Name)
 	}
 }
