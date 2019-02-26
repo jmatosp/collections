@@ -12,16 +12,6 @@ type EligibleMyTypeFilterFunc func(item MyType) bool
 func (_c MyTypeList) Filter(eligible EligibleMyTypeFilterFunc) MyTypeList {
 	var result MyTypeList
 	for _, item := range _c {
-		if !eligible(item) {
-			result = append(result, item)
-		}
-	}
-	return result
-}
-
-func (_c MyTypeList) All(eligible EligibleMyTypeFilterFunc) MyTypeList {
-	var result MyTypeList
-	for _, item := range _c {
 		if eligible(item) {
 			result = append(result, item)
 		}
