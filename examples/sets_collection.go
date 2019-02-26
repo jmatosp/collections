@@ -7,7 +7,6 @@ import (
 	"sort"
 )
 
-
 type EligiblePersonFilterFunc func(item Person) bool
 
 func (_c Persons) Filter(eligible EligiblePersonFilterFunc) Persons {
@@ -197,4 +196,3 @@ func (_c Orders) String() string {
 	})
 	return result
 }
-

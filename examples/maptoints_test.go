@@ -16,4 +16,3 @@ func ExamplePersons_MapToInts() {
 	// Output:
 	// [21 17]
 }
-
