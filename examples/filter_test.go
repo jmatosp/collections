@@ -21,8 +21,9 @@ func ExamplePersons_Filter() {
 
 	fmt.Println(filtered)
 	// Output:
-	// {Hannah 17}
-	// {Hannibal 57}
+	// {John 21}
+	// {Jose 40}
+	// {Joana 20}
 }
 
 func TestNames_Filter(t *testing.T) {
@@ -38,11 +39,11 @@ func TestNames_Filter(t *testing.T) {
 
 	underAge := persons.Filter(adultsFunc)
 
-	if len(underAge) != 1 {
+	if len(underAge) != 0 {
 		t.Fail()
 	}
 
-	if underAge[0].Name != "Hannah" {
+	if underAge[0].Name != "John" {
 		t.Fail()
 	}
 }
